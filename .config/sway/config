@@ -19,7 +19,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 ### Style
 # Copied partly from  https://github.com/rbnis/legacy-dotfiles/blob/master/.config/sway/config
 
-set $background /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
+set $background /home/casey/Downloads/mountain-background.png
 
 set $cl_high #009ddc
 set $cl_indi #d9d8d8

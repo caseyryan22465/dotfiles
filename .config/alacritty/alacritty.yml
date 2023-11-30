@@ -1,0 +1,20 @@
+env:
+  TERM: xterm-256color
+
+font:
+  normal:
+    family: OverpassM Nerd Font Mono
+    style: Regular
+  
+  bold:
+    family: OverpassM Nerd Font Mono
+    style: Bold
+  
+  italic:
+    family: Overpass Nerd Font
+    style: Italic
+
+  bold_italic:
+    family: Overpass Nerd Font
+    style: Bold Italic
+
