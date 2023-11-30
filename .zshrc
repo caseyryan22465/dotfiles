@@ -17,7 +17,14 @@ compinit
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # basic command aliases
+alias l='ls --color=auto'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias ll='ls -alh --group-directories-first --color=auto'
+
+# pwd in prompt
 PS1='%~: '
+
+# cargo in path
+path+=('/home/casey/.cargo/bin')
+export PATH
