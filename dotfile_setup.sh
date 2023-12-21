@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Dependencies
-sudo apt update && sudo apt install git npm tmux curl ripgrep
+sudo apt update && sudo apt install git npm tmux curl ripgrep zsh
 
 # Set up config repo
 echo "alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME" >> $HOME/.bashrc
@@ -10,7 +10,10 @@ git clone --bare https://github.com/caseyryan22465/dotfiles.git $HOME/.dotfiles
 source $HOME/.bashrc
 config checkout
 config config --local status.showUntrackedFiles no
-source $HOME/.bashrc
+
+# Set up zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # Set up alacritty
 ## First download rust/alacritty
