@@ -6,7 +6,7 @@ sudo apt update && sudo apt install git npm tmux curl ripgrep zsh cmake pkg-conf
 # Set up config repo
 echo ".dotfiles" >> .gitignore
 git clone --bare https://github.com/caseyryan22465/dotfiles.git $HOME/.dotfiles
-/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config checkout
+/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
 
 # Set up zsh
@@ -30,6 +30,7 @@ sudo fc-cache -fv
 # Set up neovim
 nvim_dl="https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
 curl -L -o $HOME/nvim.appimage $nvim_dl
+chmod +x $HOME/nvim.appimage
 
 cargo install tree-sitter-cli
 git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
