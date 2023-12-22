@@ -5,13 +5,16 @@ sudo apt update && sudo apt install git npm tmux curl ripgrep zsh cmake pkg-conf
 
 # Set up config repo
 echo ".dotfiles" >> .gitignore
-git clone --bare https://github.com/caseyryan22465/dotfiles.git $HOME/.dotfiles
+# git clone --bare https://github.com/caseyryan22465/dotfiles.git $HOME/.dotfiles
+git clone --bare git@github.com:caseyryan22465/dotfiles.git $HOME/.dotfiles
+
 /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME config --local status.showUntrackedFiles no
 
 # Set up zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc --unattended
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+sudo chsh -s $(which zsh)
 
 # Set up alacritty
 ## First download rust/alacritty
