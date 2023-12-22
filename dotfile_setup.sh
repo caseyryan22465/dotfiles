@@ -28,7 +28,7 @@ fonturl="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Overpa
 curl -L -o temp.zip $fonturl
 unzip -o temp.zip -d $HOME/.fonts/
 rm temp.zip
-sudo fc-cache -fv
+sudo fc-cache -fv $HOME/.fonts
 
 # Set up neovim
 nvim_dl="https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
