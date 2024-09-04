@@ -81,32 +81,50 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# Enables individual tmux pane histories
+# Also enables a central history for all panes, searchable with ctrl + r
+HISTFILE_MAIN=$HOME/.zsh_histories/.zsh_history_main
+if [[ ! -f $HISTFILE_MAIN ]]; then
+  touch $HISTFILE_MAIN
+fi
+# Write to history every cmd, and reload history every cmd
+setopt SHARE_HISTORY
 
-# export MANPATH="/usr/local/man:$MANPATH"
+function append_to_main_history {
+  # Only append if theres something to append. fixes startup error
+  if [[ -n $(fc -l -1 2>/dev/null) ]]; then
+    fc -ln -1 >> $HISTFILE_MAIN
+  fi
+}
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+function search_all_history {
+  # search main histfile, and then switch back to local histfile after
+  local original_histfile=$HISTFILE
+  HISTFILE=$HISTFILE_MAIN
+  fc -p $HISTFILE_MAIN
+  zle history-incremental-search-backward
+  fc -P
+  HISTFILE=$original_histfile
+}
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ $TMUX_PANE ]]; then
+  HISTFILE=$HOME/.zsh_histories/.zsh_history_tmux_${TMUX_PANE:1}
+  # If this is tmux, then every time we write to pane history, also write to central history
+  add-zsh-hook zshaddhistory append_to_main_history
+  zle -N search_all_history
+  # Bind ctrl + R to my search function, which calls the normal one. Bind ctrl + R and S in the normal one to their normal things
+  bindkey -M isearch '^R' history-incremental-search-backward
+  bindkey -M isearch '^S' history-incremental-search-forward
+  bindkey '^R' search_all_history
+else
+  HISTFILE=$HISTFILE_MAIN
+  neofetch
+fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Config dotfile management
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+# General aliases
 alias nvim='$HOME/nvim.appimage'
 alias bat='batcat'
 alias python='python3'
